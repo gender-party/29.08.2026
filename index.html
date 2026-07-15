@@ -190,7 +190,7 @@ body{font-family:Arial;overflow-x:hidden}
   line-height:1;
 }
 
-/* ===== ФОТО КРУГ С ПУЛЬСАЦИЕЙ ===== */
+/* ===== ФОТО КРУГ С ПУЛЬСАЦИЕЙ И ЦЕНТРАЛЬНЫМ ТЕКСТОМ ===== */
 .screen2 .photo-wrapper{
   position:absolute;
   width: clamp(240px, 44vw, 380px);
@@ -200,14 +200,44 @@ body{font-family:Arial;overflow-x:hidden}
   transform:translate(-50%, -50%);
   pointer-events: none;
   z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .screen2 .photo-wrapper img{
+  position:absolute;
   width:100%;
   height:100%;
   object-fit:contain;
   animation: pulse-photo 2.5s ease-in-out infinite;
   transform-origin: center center;
 }
+.screen2 .photo-wrapper .center-text{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  pointer-events: none;
+}
+.screen2 .photo-wrapper .center-text .week{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(16px, 3.5vw, 28px);
+  font-weight:600;
+  color:#000;
+  margin-bottom: clamp(5px, 1vw, 10px);
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+.screen2 .photo-wrapper .center-text .number{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(80px, 18vw, 160px);
+  font-weight:700;
+  color:#000;
+  line-height:1;
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+
 @keyframes pulse-photo {
   0%,100%{transform:scale(1); opacity:0.8}
   50%{transform:scale(1.06); opacity:1}
@@ -704,13 +734,27 @@ body{font-family:Arial;overflow-x:hidden}
     <div class="month-title">АВГУСТ</div>
     <div class="calendar">
       <div class="days">
-        <div class="cell"><div class="week">ПЯТНИЦА</div><div class="number">28</div></div>
-        <div class="cell middle"><div class="week">СУББОТА</div><div class="number">29</div></div>
-        <div class="cell"><div class="week">ВОСКРЕСЕНЬЕ</div><div class="number">30</div></div>
+        <div class="cell">
+          <div class="week">ПЯТНИЦА</div>
+          <div class="number">28</div>
+        </div>
+        <div class="cell middle">
+          <div class="week">СУББОТА</div>
+          <div class="number">29</div>
+        </div>
+        <div class="cell">
+          <div class="week">ВОСКРЕСЕНЬЕ</div>
+          <div class="number">30</div>
+        </div>
       </div>
 
+      <!-- ФОТО КРУГ С ТЕКСТОМ 29 СУББОТА -->
       <div class="photo-wrapper">
         <img src="круг.png" alt="Круг" onerror="this.style.display='none'">
+        <div class="center-text">
+          <div class="week">СУББОТА</div>
+          <div class="number">29</div>
+        </div>
       </div>
     </div>
   </div>
@@ -796,7 +840,6 @@ body{font-family:Arial;overflow-x:hidden}
     Пожалуйста, подтвердите присутствие до 15.08.
   </div>
 
-  <!-- ===== ИЗМЕНЕНИЕ: добавлен ваш ID Formspree ===== -->
   <form class="form-container animate-on-scroll" action="https://formspree.io/f/xjgnkdga" method="POST">
     <div class="form-field">
       <label class="form-label">Фамилия и Имя</label>
@@ -1019,7 +1062,7 @@ function updateTimer() {
 updateTimer();
 setInterval(updateTimer, 1000);
 
-// Анимация при скролле — простая, без задержек
+// Анимация при скролле
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
