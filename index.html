@@ -128,8 +128,8 @@ body{font-family:Arial;overflow-x:hidden}
 
 .music-circle{
   position:relative;
-  width: clamp(140px, 22vw, 200px);
-  height: clamp(140px, 22vw, 200px);
+  width: clamp(150px, 24vw, 220px);
+  height: clamp(150px, 24vw, 220px);
   cursor:pointer;
   transition:transform 0.3s ease;
 }
@@ -140,7 +140,7 @@ body{font-family:Arial;overflow-x:hidden}
   transform:scale(0.95);
 }
 
-/* Текстовое кольцо */
+/* Текстовое кольцо - черное */
 .music-circle svg{
   width:100%;
   height:100%;
@@ -148,13 +148,34 @@ body{font-family:Arial;overflow-x:hidden}
 }
 .text-ring{
   font-family:'Cormorant Garamond', serif;
-  font-size: clamp(12px, 1.8vw, 18px);
+  font-size: clamp(13px, 2vw, 20px);
   font-weight:600;
   letter-spacing: 2px;
   fill: #111;
 }
 .text-ring tspan{
   fill: #111;
+}
+
+/* Вращающийся текст */
+@keyframes rotateText {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.music-circle .rotating-text {
+  animation: rotateText 20s linear infinite;
+}
+
+/* Круг с обводкой */
+.music-circle .circle-border{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  border: 2.5px solid #111;
+  pointer-events:none;
 }
 
 /* Внутренний круг с динамиком */
@@ -166,26 +187,44 @@ body{font-family:Arial;overflow-x:hidden}
   width: clamp(70px, 11vw, 100px);
   height: clamp(70px, 11vw, 100px);
   border-radius:50%;
-  background:#111;
+  border: 2px solid #111;
+  background: transparent;
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:background 0.3s ease;
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
+
+/* Динамик - черный */
 .music-circle .inner-circle svg{
-  width: clamp(30px, 5vw, 45px);
-  height: clamp(30px, 5vw, 45px);
+  width: clamp(32px, 5vw, 46px);
+  height: clamp(32px, 5vw, 46px);
   fill: none;
-  stroke: #fff;
-  stroke-width: 2;
+  stroke: #111;
+  stroke-width: 2.5;
   stroke-linecap:round;
   stroke-linejoin:round;
 }
+
+/* При включении музыки */
 .music-circle.playing .inner-circle{
-  background:#47a5c8;
+  border-color: #47a5c8;
+  background: rgba(71, 165, 200, 0.08);
 }
 .music-circle.playing .inner-circle svg .slash{
   display:none;
+}
+.music-circle.playing .inner-circle svg{
+  stroke: #47a5c8;
+}
+.music-circle.playing .circle-border{
+  border-color: #47a5c8;
+}
+.music-circle.playing .text-ring{
+  fill: #47a5c8;
+}
+.music-circle.playing .text-ring tspan{
+  fill: #47a5c8;
 }
 
 .screen2 .info{
@@ -780,28 +819,30 @@ body{font-family:Arial;overflow-x:hidden}
   <div class="music-player animate-on-scroll">
     <div class="music-circle" id="musicCircle" onclick="toggleMusic()">
       <svg viewBox="0 0 200 200">
-        <!-- Текстовое кольцо -->
+        <!-- Текстовое кольцо с анимацией вращения -->
         <defs>
           <path id="textPath" d="M 100,100 m -85,0 a 85,85 0 1,1 170,0 a 85,85 0 1,1 -170,0"/>
         </defs>
-        <text class="text-ring">
-          <textPath href="#textPath" startOffset="0%">
-            ВЫ&nbsp;ПРИГЛАШЕНЫ&nbsp;•&nbsp;ВЫ&nbsp;ПРИГЛАШЕНЫ&nbsp;•&nbsp;ВЫ&nbsp;ПРИГЛАШЕНЫ&nbsp;•&nbsp;ВЫ&nbsp;ПРИГЛАШЕНЫ&nbsp;•&nbsp;
-          </textPath>
-        </text>
+        <g class="rotating-text">
+          <text class="text-ring">
+            <textPath href="#textPath" startOffset="0%">
+              ВКЛЮЧИТЕ&nbsp;МУЗЫКУ&nbsp;•&nbsp;ВКЛЮЧИТЕ&nbsp;МУЗЫКУ&nbsp;•&nbsp;ВКЛЮЧИТЕ&nbsp;МУЗЫКУ&nbsp;•&nbsp;ВКЛЮЧИТЕ&nbsp;МУЗЫКУ&nbsp;•&nbsp;
+            </textPath>
+          </text>
+        </g>
       </svg>
+      
+      <!-- Круг с обводкой -->
+      <div class="circle-border"></div>
       
       <!-- Внутренний круг с динамиком -->
       <div class="inner-circle" id="innerCircle">
         <svg viewBox="0 0 100 100">
           <!-- Динамик -->
-          <rect x="30" y="35" width="12" height="30" rx="2" fill="none" stroke="white" stroke-width="3"/>
-          <path d="M42 40 L55 30 L55 70 L42 60" fill="none" stroke="white" stroke-width="3" stroke-linejoin="round"/>
-          <!-- Звуковые волны -->
-          <path d="M62 38 Q68 50 62 62" fill="none" stroke="white" stroke-width="2.5"/>
-          <path d="M68 32 Q76 50 68 68" fill="none" stroke="white" stroke-width="2.5"/>
+          <rect x="28" y="32" width="14" height="36" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <path d="M44 38 L58 28 L58 72 L44 62" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
           <!-- Зачеркивание -->
-          <line class="slash" x1="25" y1="25" x2="75" y2="75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <line class="slash" x1="22" y1="22" x2="78" y2="78" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
         </svg>
       </div>
     </div>
@@ -1055,7 +1096,6 @@ let gainNode = null;
 
 function toggleMusic() {
     const circle = document.getElementById('musicCircle');
-    const innerCircle = document.getElementById('innerCircle');
     
     if (!isPlaying) {
         // Включаем музыку
@@ -1073,8 +1113,8 @@ function toggleMusic() {
             
             // Настройка звука
             oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // Ля
-            oscillator.frequency.exponentialRampToValueAtTime(523, audioContext.currentTime + 2); // До
+            oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(523, audioContext.currentTime + 2);
             
             // Плавное затухание
             gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
