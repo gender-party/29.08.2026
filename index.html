@@ -381,25 +381,15 @@ body{font-family:Arial;overflow-x:hidden}
 .screen3 .vote-btn:hover{transform: scale(1.1);}
 .screen3 .vote-btn:active{transform: scale(0.92);}
 
-/* АДАПТИВНЫЕ КАРТИНКИ ДЛЯ ГОЛОСОВАНИЯ */
-.screen3 .vote-photo{
-  width: clamp(90px, 18vw, 140px);
-  height: clamp(90px, 18vw, 140px);
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid rgba(255,255,255,0.8);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
+/* АДАПТИВНЫЕ КАРТИНКИ ДЛЯ ГОЛОСОВАНИЯ — теперь просто эмодзи */
+.screen3 .vote-emoji{
+  font-size: clamp(64px, 14vw, 110px);
+  line-height: 1;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+  transition: transform 0.2s ease;
 }
-.screen3 .vote-photo img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+.screen3 .vote-btn:hover .vote-emoji{
+  transform: scale(1.08);
 }
 .screen3 .vote-label{
   font-family:'Cormorant Garamond', serif;
@@ -775,17 +765,13 @@ body{font-family:Arial;overflow-x:hidden}
 
     <div class="vote-buttons">
       <button class="vote-btn" onclick="vote('girl')">
-        <div class="vote-photo">
-          <img src="девочка.png" alt="Девочка" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=width:100%;height:100%;background:%23ffb3c6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:45px>🌸</div>'">
-        </div>
+        <div class="vote-emoji">🌸</div>
         <span class="vote-label">Девочка</span>
         <span class="vote-count" id="count-girl">0</span>
       </button>
 
       <button class="vote-btn" onclick="vote('boy')">
-        <div class="vote-photo">
-          <img src="мальчик.png" alt="Мальчик" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=width:100%;height:100%;background:%235c9ce6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:45px>⚽</div>'">
-        </div>
+        <div class="vote-emoji">⚽</div>
         <span class="vote-label">Мальчик</span>
         <span class="vote-count" id="count-boy">0</span>
       </button>
