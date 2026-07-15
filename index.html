@@ -116,6 +116,78 @@ body{font-family:Arial;overflow-x:hidden}
   letter-spacing: 3px;
   padding-top: clamp(20px, 4vw, 40px);
 }
+
+/* ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР ===== */
+.music-player{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: clamp(15px, 2.5vw, 25px);
+  margin: clamp(10px, 2vw, 20px) 0;
+}
+
+.music-circle{
+  position:relative;
+  width: clamp(140px, 22vw, 200px);
+  height: clamp(140px, 22vw, 200px);
+  cursor:pointer;
+  transition:transform 0.3s ease;
+}
+.music-circle:hover{
+  transform:scale(1.05);
+}
+.music-circle:active{
+  transform:scale(0.95);
+}
+
+/* Текстовое кольцо */
+.music-circle svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+.text-ring{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(12px, 1.8vw, 18px);
+  font-weight:600;
+  letter-spacing: 2px;
+  fill: #111;
+}
+.text-ring tspan{
+  fill: #111;
+}
+
+/* Внутренний круг с динамиком */
+.music-circle .inner-circle{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width: clamp(70px, 11vw, 100px);
+  height: clamp(70px, 11vw, 100px);
+  border-radius:50%;
+  background:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background 0.3s ease;
+}
+.music-circle .inner-circle svg{
+  width: clamp(30px, 5vw, 45px);
+  height: clamp(30px, 5vw, 45px);
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.music-circle.playing .inner-circle{
+  background:#47a5c8;
+}
+.music-circle.playing .inner-circle svg .slash{
+  display:none;
+}
+
 .screen2 .info{
   font-family:'Cormorant Garamond';
   font-size: clamp(18px, 3.5vw, 28px);
@@ -124,6 +196,7 @@ body{font-family:Arial;overflow-x:hidden}
   padding: 0 10px;
   color:#111;
 }
+
 .screen2 .calendar-wrapper{
   width:100%;
   max-width:750px;
@@ -380,16 +453,25 @@ body{font-family:Arial;overflow-x:hidden}
 }
 .screen3 .vote-btn:hover{transform: scale(1.1);}
 .screen3 .vote-btn:active{transform: scale(0.92);}
+
+/* АДАПТИВНЫЕ КАРТИНКИ ДЛЯ ГОЛОСОВАНИЯ */
 .screen3 .vote-photo{
-  width: clamp(80px, 16vw, 120px);
-  height: clamp(80px, 16vw, 120px);
+  width: clamp(90px, 18vw, 140px);
+  height: clamp(90px, 18vw, 140px);
   border-radius: 50%;
   overflow: hidden;
+  border: 3px solid rgba(255,255,255,0.8);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
 }
 .screen3 .vote-photo img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 .screen3 .vote-label{
@@ -694,6 +776,37 @@ body{font-family:Arial;overflow-x:hidden}
 
   <div class="title animate-on-scroll">Дорогие и любимые!</div>
 
+  <!-- ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР ===== -->
+  <div class="music-player animate-on-scroll">
+    <div class="music-circle" id="musicCircle" onclick="toggleMusic()">
+      <svg viewBox="0 0 200 200">
+        <!-- Текстовое кольцо -->
+        <defs>
+          <path id="textPath" d="M 100,100 m -85,0 a 85,85 0 1,1 170,0 a 85,85 0 1,1 -170,0"/>
+        </defs>
+        <text class="text-ring">
+          <textPath href="#textPath" startOffset="0%">
+            ВЫ&nbsp;ПРИГЛАШЕНЫ&nbsp;•&nbsp;ВЫ&nbsp;ПРИГЛАШЕНЫ&nbsp;•&nbsp;ВЫ&nbsp;ПРИГЛАШЕНЫ&nbsp;•&nbsp;ВЫ&nbsp;ПРИГЛАШЕНЫ&nbsp;•&nbsp;
+          </textPath>
+        </text>
+      </svg>
+      
+      <!-- Внутренний круг с динамиком -->
+      <div class="inner-circle" id="innerCircle">
+        <svg viewBox="0 0 100 100">
+          <!-- Динамик -->
+          <rect x="30" y="35" width="12" height="30" rx="2" fill="none" stroke="white" stroke-width="3"/>
+          <path d="M42 40 L55 30 L55 70 L42 60" fill="none" stroke="white" stroke-width="3" stroke-linejoin="round"/>
+          <!-- Звуковые волны -->
+          <path d="M62 38 Q68 50 62 62" fill="none" stroke="white" stroke-width="2.5"/>
+          <path d="M68 32 Q76 50 68 68" fill="none" stroke="white" stroke-width="2.5"/>
+          <!-- Зачеркивание -->
+          <line class="slash" x1="25" y1="25" x2="75" y2="75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
   <div class="info animate-on-scroll">
     Приглашаем Вас на наше трепетное и<br>
     семейное торжество! Произойдет<br>
@@ -934,6 +1047,71 @@ body{font-family:Arial;overflow-x:hidden}
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <script>
+// ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР =====
+let isPlaying = false;
+let audioContext = null;
+let oscillator = null;
+let gainNode = null;
+
+function toggleMusic() {
+    const circle = document.getElementById('musicCircle');
+    const innerCircle = document.getElementById('innerCircle');
+    
+    if (!isPlaying) {
+        // Включаем музыку
+        try {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            
+            // Создаём осциллятор для приятного звука
+            oscillator = audioContext.createOscillator();
+            gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            // Настройка звука
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // Ля
+            oscillator.frequency.exponentialRampToValueAtTime(523, audioContext.currentTime + 2); // До
+            
+            // Плавное затухание
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.3, audioContext.currentTime + 0.5);
+            
+            oscillator.start();
+            
+            // Автоматическая остановка через 5 секунд для демонстрации
+            setTimeout(() => {
+                if (isPlaying) {
+                    stopMusic();
+                }
+            }, 5000);
+            
+            isPlaying = true;
+            circle.classList.add('playing');
+            
+        } catch (error) {
+            console.log('Ошибка воспроизведения музыки:', error);
+        }
+    } else {
+        stopMusic();
+    }
+}
+
+function stopMusic() {
+    if (oscillator) {
+        try {
+            oscillator.stop();
+        } catch (e) {}
+        oscillator = null;
+    }
+    isPlaying = false;
+    document.getElementById('musicCircle').classList.remove('playing');
+}
+
+// ===== FIREBASE =====
 const firebaseConfig = {
   databaseURL: "https://gender-e7fab-default-rtdb.firebaseio.com/"
 };
