@@ -112,119 +112,108 @@ body{font-family:Arial;overflow-x:hidden}
   font-size: clamp(42px, 9vw, 72px);
   font-weight:400;
   line-height:1.1;
-  color:#111;
+  color:#2d2a2a;
   letter-spacing: 3px;
   padding-top: clamp(20px, 4vw, 40px);
 }
 
-/* ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР ===== */
-.music-player{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap: clamp(15px, 2.5vw, 25px);
-  margin: clamp(10px, 2vw, 20px) 0;
+/* ===== КНОПКА МУЗЫКИ ПО ЦЕНТРУ ===== */
+.music-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 25px 0;
+  width: 100%;
 }
-
-.music-circle{
-  position:relative;
-  width: clamp(150px, 24vw, 220px);
-  height: clamp(150px, 24vw, 220px);
-  cursor:pointer;
-  transition:transform 0.3s ease;
+.music-btn-center {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1.5px solid #000;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  padding: 0;
 }
-.music-circle:hover{
-  transform:scale(1.05);
+.music-btn-center:hover {
+  transform: scale(1.05);
+  border-color: #000;
 }
-.music-circle:active{
-  transform:scale(0.95);
+.music-btn-center:active {
+  transform: scale(0.92);
 }
-
-/* Текстовое кольцо - черное */
-.music-circle svg{
-  width:100%;
-  height:100%;
-  display:block;
-}
-.text-ring{
-  font-family:'Cormorant Garamond', serif;
-  font-size: clamp(13px, 2vw, 20px);
-  font-weight:600;
-  letter-spacing: 2px;
-  fill: #111;
-}
-.text-ring tspan{
-  fill: #111;
-}
-
-/* Вращающийся текст */
-@keyframes rotateText {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-.music-circle .rotating-text {
-  animation: rotateText 20s linear infinite;
-}
-
-/* Круг с обводкой */
-.music-circle .circle-border{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  border-radius:50%;
-  border: 2.5px solid #111;
-  pointer-events:none;
-}
-
-/* Внутренний круг с динамиком */
-.music-circle .inner-circle{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
-  width: clamp(70px, 11vw, 100px);
-  height: clamp(70px, 11vw, 100px);
-  border-radius:50%;
-  border: 2px solid #111;
-  background: transparent;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition: border-color 0.3s ease, background 0.3s ease;
-}
-
-/* Динамик - черный */
-.music-circle .inner-circle svg{
-  width: clamp(32px, 5vw, 46px);
-  height: clamp(32px, 5vw, 46px);
+.music-btn-center svg {
+  width: 38px;
+  height: 38px;
   fill: none;
-  stroke: #111;
-  stroke-width: 2.5;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+  stroke: #000;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.25s;
 }
-
-/* При включении музыки */
-.music-circle.playing .inner-circle{
-  border-color: #47a5c8;
-  background: rgba(71, 165, 200, 0.08);
+.music-btn-center .slash {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  width: 48px;
+  height: 2px;
+  background: #000;
+  border-radius: 2px;
+  pointer-events: none;
 }
-.music-circle.playing .inner-circle svg .slash{
-  display:none;
+/* по умолчанию — muted (перечеркнут) */
+.music-btn-center.muted {
+  border-color: #000;
+  background: rgba(255,255,255,0.15);
 }
-.music-circle.playing .inner-circle svg{
-  stroke: #47a5c8;
+.music-btn-center.muted svg {
+  stroke: #000;
 }
-.music-circle.playing .circle-border{
-  border-color: #47a5c8;
+.music-btn-center.muted .slash {
+  display: block;
+  background: #000;
 }
-.music-circle.playing .text-ring{
-  fill: #47a5c8;
+.music-btn-center:not(.muted) .slash {
+  display: none;
 }
-.music-circle.playing .text-ring tspan{
-  fill: #47a5c8;
+/* вращающийся текст с точками */
+.music-btn-center .rotate-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 190px;
+  aspect-ratio: 1/1;
+  pointer-events: none;
+  animation: spin-text 16s linear infinite;
+}
+.music-btn-center .rotate-text svg {
+  width: 100%;
+  height: 100%;
+}
+.music-btn-center .rotate-text text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 200;
+  letter-spacing: 2.5px;
+  fill: #000;
+}
+.music-btn-center.muted .rotate-text text {
+  fill: #000;
+}
+@keyframes spin-text {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .screen2 .info{
@@ -233,7 +222,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:600;
   line-height:1.45;
   padding: 0 10px;
-  color:#111;
+  color:#2d2a2a;
 }
 
 .screen2 .calendar-wrapper{
@@ -250,21 +239,21 @@ body{font-family:Arial;overflow-x:hidden}
   font-size: clamp(36px, 8vw, 58px);
   font-weight:700;
   letter-spacing: 2px;
-  color:#111;
+  color:#2d2a2a;
 }
 .screen2 .month-title:before,
 .screen2 .month-title:after{
   content:"";
   height:2px;
-  background:#111;
+  background:#2d2a2a;
   flex:1;
 }
 .screen2 .calendar{
   position:relative;
   margin-top: clamp(10px, 2vw, 15px);
   height: clamp(200px, 38vw, 310px);
-  border-top:2px solid #111;
-  border-bottom:2px solid #111;
+  border-top:2px solid #2d2a2a;
+  border-bottom:2px solid #2d2a2a;
 }
 .screen2 .days{
   height:100%;
@@ -272,7 +261,7 @@ body{font-family:Arial;overflow-x:hidden}
   grid-template-columns:1fr 1fr 1fr;
 }
 .screen2 .cell{
-  border-right:2px solid #111;
+  border-right:2px solid #2d2a2a;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -288,7 +277,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:600;
   margin-bottom: clamp(10px, 2.5vw, 25px);
   white-space: nowrap;
-  color:#111;
+  color:#2d2a2a;
 }
 .screen2 .number{
   font-size: clamp(60px, 13vw, 110px);
@@ -296,7 +285,7 @@ body{font-family:Arial;overflow-x:hidden}
   color: #bbb;
 }
 .screen2 .middle .number{
-  color:#000;
+  color:#2d2a2a;
   font-size: clamp(80px, 18vw, 160px);
   font-weight:700;
   line-height:1;
@@ -331,7 +320,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:600;
   line-height:1.5;
   padding: 0 10px;
-  color:#111;
+  color:#2d2a2a;
 }
 
 .screen2 .time-block{
@@ -356,7 +345,7 @@ body{font-family:Arial;overflow-x:hidden}
 .screen2 .line.bottom{bottom: 0; transform: rotate(180deg);}
 .screen2 .line path{
   fill: none;
-  stroke: #666;
+  stroke: #8a7a7a;
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -373,7 +362,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(24px, 4.5vw, 40px);
   font-weight:600;
-  color: #111;
+  color: #2d2a2a;
   line-height: 1.3;
   margin-bottom: clamp(20px, 3.5vw, 32px);
 }
@@ -401,14 +390,14 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:400;
   line-height:1.1;
   letter-spacing: 3px;
-  color:#111;
+  color:#2d2a2a;
 }
 .screen2 .location-address{
   font-family:'Cormorant Garamond', serif;
   font-size: clamp(16px, 3vw, 24px);
   font-weight:600;
   line-height:1.6;
-  color:#111;
+  color:#2d2a2a;
   padding: 0 10px;
 }
 .screen2 .location-name{
@@ -562,7 +551,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:400;
   letter-spacing: 3px;
   line-height:1.1;
-  color:#111;
+  color:#2d2a2a;
 }
 
 .screen4 .details-text{
@@ -570,7 +559,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-size: clamp(20px, 3.8vw, 30px);
   font-weight:500;
   line-height:1.7;
-  color:#111;
+  color:#2d2a2a;
   max-width: 680px;
   padding: 0 10px;
 }
@@ -581,7 +570,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:400;
   letter-spacing: 3px;
   line-height:1.1;
-  color:#111;
+  color:#2d2a2a;
 }
 
 .screen4 .form-subtitle{
@@ -589,7 +578,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-size: clamp(20px, 3.8vw, 30px);
   font-weight:500;
   line-height:1.5;
-  color:#111;
+  color:#2d2a2a;
   max-width: 680px;
   padding: 0 10px;
 }
@@ -608,7 +597,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-family:'Cormorant Garamond', serif;
   font-size: clamp(20px, 3.2vw, 26px);
   font-weight:600;
-  color:#111;
+  color:#2d2a2a;
 }
 .screen4 .form-input{
   font-family:'Cormorant Garamond', serif;
@@ -617,7 +606,7 @@ body{font-family:Arial;overflow-x:hidden}
   border: 1.5px solid #47a5c8;
   border-radius: 14px;
   background: transparent;
-  color:#111;
+  color:#2d2a2a;
   outline: none;
   transition: border-color 0.3s ease;
 }
@@ -636,7 +625,7 @@ body{font-family:Arial;overflow-x:hidden}
 }
 .screen4 .radio-option span{
   font-family:'Cormorant Garamond', serif;
-  font-size: clamp(18px, 2.8vw, 22px);color:#111;
+  font-size: clamp(18px, 2.8vw, 22px);color:#2d2a2a;
 }
 
 .screen4 .checkbox-group{display:flex;flex-direction:column;gap:clamp(10px,1.8vw,14px)}
@@ -652,7 +641,7 @@ body{font-family:Arial;overflow-x:hidden}
 }
 .screen4 .checkbox-option span{
   font-family:'Cormorant Garamond', serif;
-  font-size: clamp(18px, 2.8vw, 22px);color:#111;
+  font-size: clamp(18px, 2.8vw, 22px);color:#2d2a2a;
 }
 
 .screen4 .submit-btn{
@@ -672,18 +661,18 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:400;
   letter-spacing: 3px;
   line-height:1.1;
-  color:#111;
+  color:#2d2a2a;
   margin-top: clamp(30px, 5vw, 50px);
 }
 
 .screen4 .contacts-info{
   font-family:'Cormorant Garamond', serif;
-  font-size: clamp(20px, 3.8vw, 30px);font-weight:500;line-height:1.6;color:#111;
+  font-size: clamp(20px, 3.8vw, 30px);font-weight:500;line-height:1.6;color:#2d2a2a;
 }
 
 .screen4 .contacts-phone{
   font-family:'Cormorant Garamond', serif;
-  font-size: clamp(22px, 4vw, 34px);font-weight:600;color:#111;letter-spacing:0.5px;
+  font-size: clamp(22px, 4vw, 34px);font-weight:600;color:#2d2a2a;letter-spacing:0.5px;
 }
 
 /* ===== ЗВЁЗДОЧКИ ===== */
@@ -722,7 +711,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:400;
   letter-spacing: 3px;
   line-height:1.1;
-  color:#111;
+  color:#2d2a2a;
 }
 
 .screen4 .waiting-subtitle{
@@ -731,7 +720,7 @@ body{font-family:Arial;overflow-x:hidden}
   font-weight:400;
   letter-spacing: 3px;
   line-height:1.1;
-  color:#111;
+  color:#2d2a2a;
   margin-top: clamp(2px, 0.5vw, 6px);
 }
 
@@ -815,37 +804,28 @@ body{font-family:Arial;overflow-x:hidden}
 
   <div class="title animate-on-scroll">Дорогие и любимые!</div>
 
-  <!-- ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР ===== -->
-  <div class="music-player animate-on-scroll">
-    <div class="music-circle" id="musicCircle" onclick="toggleMusic()">
-      <svg viewBox="0 0 200 200">
-        <!-- Текстовое кольцо с анимацией вращения -->
-        <defs>
-          <path id="textPath" d="M 100,100 m -85,0 a 85,85 0 1,1 170,0 a 85,85 0 1,1 -170,0"/>
-        </defs>
-        <g class="rotating-text">
-          <text class="text-ring">
-            <textPath href="#textPath" startOffset="0%">
-              ВКЛЮЧИТЕ&nbsp;МУЗЫКУ&nbsp;•&nbsp;ВКЛЮЧИТЕ&nbsp;МУЗЫКУ&nbsp;•&nbsp;ВКЛЮЧИТЕ&nbsp;МУЗЫКУ&nbsp;•&nbsp;ВКЛЮЧИТЕ&nbsp;МУЗЫКУ&nbsp;•&nbsp;
+  <!-- ===== КНОПКА МУЗЫКИ ПО ЦЕНТРУ ===== -->
+  <div class="music-center animate-on-scroll">
+    <button class="music-btn-center muted" id="musicBtnCenter" aria-label="Включить музыку">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+      </svg>
+      <div class="slash"></div>
+      <div class="rotate-text">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path id="circlePathCenter" d="M 100,100 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+          </defs>
+          <text font-size="13" letter-spacing="2.5" fill="#000" font-weight="200" font-family="'Cormorant Garamond', serif">
+            <textPath href="#circlePathCenter" startOffset="2%">
+              • Включите музыку • Включите музыку • Включите музыку
             </textPath>
           </text>
-        </g>
-      </svg>
-      
-      <!-- Круг с обводкой -->
-      <div class="circle-border"></div>
-      
-      <!-- Внутренний круг с динамиком -->
-      <div class="inner-circle" id="innerCircle">
-        <svg viewBox="0 0 100 100">
-          <!-- Динамик -->
-          <rect x="28" y="32" width="14" height="36" rx="3" stroke="currentColor" stroke-width="2.5" fill="none"/>
-          <path d="M44 38 L58 28 L58 72 L44 62" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-          <!-- Зачеркивание -->
-          <line class="slash" x1="22" y1="22" x2="78" y2="78" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
         </svg>
       </div>
-    </div>
+    </button>
   </div>
 
   <div class="info animate-on-scroll">
@@ -1018,7 +998,7 @@ body{font-family:Arial;overflow-x:hidden}
   <div class="contacts-info animate-on-scroll">
     По всем вопросам обращайтесь:<br>
     <span style="font-weight:600;">Владислав</span><br>
-    <a href="tel:+375292207777" class="contacts-phone" style="text-decoration:none;color:#111;">+375 29 220 77 77</a>
+    <a href="tel:+375292207777" class="contacts-phone" style="text-decoration:none;color:#2d2a2a;">+375 29 220 77 77</a>
   </div>
 
   <!-- 3 звездочки -->
@@ -1088,69 +1068,6 @@ body{font-family:Arial;overflow-x:hidden}
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <script>
-// ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР =====
-let isPlaying = false;
-let audioContext = null;
-let oscillator = null;
-let gainNode = null;
-
-function toggleMusic() {
-    const circle = document.getElementById('musicCircle');
-    
-    if (!isPlaying) {
-        // Включаем музыку
-        try {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            
-            // Создаём осциллятор для приятного звука
-            oscillator = audioContext.createOscillator();
-            gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            // Настройка звука
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(523, audioContext.currentTime + 2);
-            
-            // Плавное затухание
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.3, audioContext.currentTime + 0.5);
-            
-            oscillator.start();
-            
-            // Автоматическая остановка через 5 секунд для демонстрации
-            setTimeout(() => {
-                if (isPlaying) {
-                    stopMusic();
-                }
-            }, 5000);
-            
-            isPlaying = true;
-            circle.classList.add('playing');
-            
-        } catch (error) {
-            console.log('Ошибка воспроизведения музыки:', error);
-        }
-    } else {
-        stopMusic();
-    }
-}
-
-function stopMusic() {
-    if (oscillator) {
-        try {
-            oscillator.stop();
-        } catch (e) {}
-        oscillator = null;
-    }
-    isPlaying = false;
-    document.getElementById('musicCircle').classList.remove('playing');
-}
-
 // ===== FIREBASE =====
 const firebaseConfig = {
   databaseURL: "https://gender-e7fab-default-rtdb.firebaseio.com/"
@@ -1256,6 +1173,26 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// ===== МУЗЫКА: переключатель для кнопки по центру =====
+const musicBtnCenter = document.getElementById('musicBtnCenter');
+let isMutedCenter = true; // по умолчанию выключена (перечеркнута)
+
+musicBtnCenter.addEventListener('click', function(e) {
+  e.preventDefault();
+  isMutedCenter = !isMutedCenter;
+  this.classList.toggle('muted', isMutedCenter);
+  this.setAttribute('aria-label', isMutedCenter ? 'Включить музыку' : 'Выключить музыку');
+  
+  // Здесь можно добавить воспроизведение/остановку музыки
+  if (!isMutedCenter) {
+    // Включаем музыку
+    console.log('Музыка включена');
+  } else {
+    // Выключаем музыку
+    console.log('Музыка выключена');
+  }
+});
 </script>
 
 </body>
