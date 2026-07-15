@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Gender Reveal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Ms+Madi&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Arial}
+
+/* ===== ЭКРАН 1: Girl or Boy ===== */
+.screen1{
+  position:relative;
+  height:100vh;
+  height:100dvh;
+  width:100%;
+  overflow:hidden;
+  background:#000;
+}
+.screen1 video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.screen1 .overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.35);
+}
+.screen1 .star{
+  position:absolute;
+  width:20px;
+  height:20px;
+}
+.screen1 .star svg{
+  width:100%;
+  height:100%;
+}
+.screen1 .title{
+  position:absolute;
+  left:50%;
+  bottom:25%;
+  transform:translateX(-50%) rotate(-9deg);
+  font-family:'Ms Madi',cursive;
+  font-size:clamp(72px,10vw,140px);
+  color:#fff;
+  white-space:nowrap;
+  text-shadow:0 0 8px rgba(255,255,255,.15);
+  font-weight:100;
+  letter-spacing:6px;
+  -webkit-text-stroke:0.5px white;
+}
+.screen1 .arrow{
+  position:absolute;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%);
+  animation:b 1.8s infinite;
+  cursor:pointer;
+  text-decoration:none;
+}
+.screen1 .arrow svg{
+  width:28px;
+  height:28px;
+  display:block;
+}
+@keyframes b{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(8px)}
+}
+
+/* ===== ЭКРАН 2: Приглашение ===== */
+.screen2{
+  min-height:100vh;
+  min-height:100dvh;
+  width:100%;
+  background: linear-gradient(160deg, #d4f0ff 0%, #ffe0ec 35%, #c8e8ff 50%, #ffd6e8 70%, #d4f0ff 100%);
+  background-size: 400% 400%;
+  animation: rainbowBg 12s ease-in-out infinite;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  padding: clamp(30px, 6vw, 55px) clamp(16px, 3vw, 24px) clamp(20px, 4vw, 35px);
+  justify-content: center;
+  gap: clamp(14px, 2.5vw, 28px);
+  overflow-x:hidden;
+}
+@keyframes rainbowBg {
+  0%{background-position:0% 50%}
+  25%{background-position:100% 0%}
+  50%{background-position:100% 100%}
+  75%{background-position:0% 100%}
+  100%{background-position:0% 50%}
+}
+
+.screen2 .title,
+.screen2 .info,
+.screen2 .calendar-wrapper,
+.screen2 .bottom,
+.screen2 .time-block,
+.screen2 .location-block{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.screen2.visible .title{opacity:1;transform:translateY(0);transition-delay:0.1s}
+.screen2.visible .info{opacity:1;transform:translateY(0);transition-delay:0.2s}
+.screen2.visible .calendar-wrapper{opacity:1;transform:translateY(0);transition-delay:0.35s}
+.screen2.visible .bottom{opacity:1;transform:translateY(0);transition-delay:0.5s}
+.screen2.visible .time-block{opacity:1;transform:translateY(0);transition-delay:0.65s}
+.screen2.visible .location-block{opacity:1;transform:translateY(0);transition-delay:0.8s}
+
+.screen2 .title{
+  font-family:'Great Vibes', cursive;
+  font-size: clamp(38px, 8vw, 66px);
+  font-weight:400;
+  line-height:1.1;
+  color:#111;
+  padding-top: clamp(20px, 4vw, 40px);
+}
+.screen2 .info{
+  font-family:'Cormorant Garamond';
+  font-size: clamp(18px, 3.5vw, 28px);
+  font-weight:600;
+  line-height:1.45;
+  padding: 0 10px;
+  color:#111;
+}
+.screen2 .calendar-wrapper{
+  width:100%;
+  max-width:750px;
+  flex-shrink: 0;
+}
+.screen2 .month-title{
+  display:flex;
+  align-items:center;
+  gap: clamp(12px, 3vw, 25px);
+  justify-content:center;
+  font-family:'Cormorant Garamond';
+  font-size: clamp(36px, 8vw, 58px);
+  font-weight:700;
+  color:#111;
+}
+.screen2 .month-title:before,
+.screen2 .month-title:after{
+  content:"";
+  height:2px;
+  background:#111;
+  flex:1;
+}
+.screen2 .calendar{
+  position:relative;
+  margin-top: clamp(10px, 2vw, 15px);
+  height: clamp(200px, 38vw, 310px);
+  border-top:2px solid #111;
+  border-bottom:2px solid #111;
+}
+.screen2 .days{
+  height:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+}
+.screen2 .cell{
+  border-right:2px solid #111;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-family:'Cormorant Garamond';
+  padding: clamp(5px, 2vw, 12px);
+}
+.screen2 .cell:last-child{border:none}
+.screen2 .week{
+  font-size: clamp(16px, 3.5vw, 28px);
+  font-weight:600;
+  margin-bottom: clamp(10px, 2.5vw, 25px);
+  white-space: nowrap;
+  color:#111;
+}
+.screen2 .number{
+  font-size: clamp(60px, 13vw, 110px);
+  font-weight:700;
+  color: #bbb;
+}
+.screen2 .middle .number{
+  color:#000;
+  font-size: clamp(80px, 18vw, 160px);
+  font-weight:700;
+  line-height:1;
+}
+
+.screen2 .circle-wrapper{
+  position:absolute;
+  width: clamp(170px, 34vw, 280px);
+  height: clamp(170px, 34vw, 280px);
+  left:50%;
+  top: clamp(5px, 2vw, 15px);
+  transform:translateX(-50%);
+  pointer-events: none;
+}
+.screen2 .circle-wrapper svg{
+  width:100%;
+  height:100%;
+  overflow:visible;
+  animation: breathe 3s ease-in-out infinite;
+  transform-origin: center center;
+}
+@keyframes breathe {
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+}
+.rough-ellipse{
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:url(#rough);
+}
+
+.screen2 .bottom{
+  font-family:'Cormorant Garamond';
+  font-size: clamp(18px, 3.5vw, 28px);
+  font-weight:600;
+  line-height:1.5;
+  padding: 0 10px;
+  color:#111;
+}
+
+.screen2 .time-block{
+  width: 100%;
+  max-width: 550px;
+  position: relative;
+  flex-shrink: 0;
+}
+.screen2 .decor-lines{
+  width: 100%;
+  height: clamp(240px, 36vw, 360px);
+  position: relative;
+}
+.screen2 .line{
+  position: absolute;
+  width: 100%;
+  left: 0;
+  height: auto;
+}
+.screen2 .line.top{top: 0;}
+.screen2 .line.bottom{bottom: 0; transform: rotate(180deg);}
+.screen2 .line path{
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.screen2 .time-text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+.screen2 .time-label{
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 4.5vw, 40px);
+  font-weight:600;
+  color: #111;
+  line-height: 1.3;
+  margin-bottom: clamp(10px, 2vw, 18px);
+}
+.screen2 .time-value{
+  font-family: 'Ms Madi', cursive;
+  font-size: clamp(60px, 12vw, 120px);
+  line-height: 1;
+  letter-spacing: 5px;
+}
+.screen2 .time-value .blue{color: #00a9d8;}
+.screen2 .time-value .pink{color: #df5aa5;}
+
+.screen2 .location-block{
+  width: 100%;
+  max-width: 550px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 3.5vw, 35px);
+}
+.screen2 .location-title{
+  font-family:'Great Vibes', cursive;
+  font-size: clamp(38px, 8vw, 66px);
+  font-weight:400;
+  line-height:1.1;
+  color:#111;
+}
+.screen2 .location-address{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(16px, 3vw, 24px);
+  font-weight:600;
+  line-height:1.6;
+  color:#111;
+  padding: 0 10px;
+}
+.screen2 .location-name{
+  font-weight:700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: clamp(8px, 1.5vw, 14px);
+}
+.screen2 .location-details{
+  font-weight:600;
+}
+.screen2 .map-container{
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.screen2 .map-container iframe{
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ===== ЭКРАН 3: Голосование ===== */
+.screen3{
+  min-height: 40vh;
+  min-height: 40dvh;
+  width:100%;
+  background: linear-gradient(160deg, #d4f0ff 0%, #ffe0ec 35%, #c8e8ff 50%, #ffd6e8 70%, #d4f0ff 100%);
+  background-size: 400% 400%;
+  animation: rainbowBg 12s ease-in-out infinite;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  padding: clamp(35px, 7vw, 60px) clamp(16px, 3vw, 24px);
+  justify-content: center;
+  overflow-x:hidden;
+}
+
+.screen3 .vote-container{
+  background: #47a5c8;
+  border-radius: 22px;
+  padding: clamp(20px, 4vw, 35px) clamp(20px, 4vw, 35px);
+  max-width: 550px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 3vw, 30px);
+}
+.screen3 .vote-title{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight:700;
+  color: #fff;
+  line-height: 1.3;
+}
+.screen3 .vote-buttons{
+  display: flex;
+  gap: clamp(35px, 8vw, 80px);
+  justify-content: center;
+  align-items: flex-start;
+}
+.screen3 .vote-btn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 12px);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: transform 0.25s ease;
+}
+.screen3 .vote-btn:hover{transform: scale(1.1);}
+.screen3 .vote-btn:active{transform: scale(0.92);}
+.screen3 .vote-photo{
+  width: clamp(80px, 16vw, 120px);
+  height: clamp(80px, 16vw, 120px);
+  border-radius: 50%;
+  overflow: hidden;
+}
+.screen3 .vote-photo img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.screen3 .vote-label{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(14px, 2.2vw, 20px);
+  font-weight:600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.screen3 .vote-count{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(32px, 6vw, 50px);
+  font-weight:700;
+  color: #fff;
+  min-height: clamp(38px, 6.5vw, 58px);
+}
+
+/* ===== ДЕТАЛИ + АНКЕТА + КОНТАКТЫ ===== */
+.shared-bg{
+  width:100%;
+  background: linear-gradient(160deg, #d4f0ff 0%, #ffe0ec 35%, #c8e8ff 50%, #ffd6e8 70%, #d4f0ff 100%);
+  background-size: 400% 400%;
+  animation: rainbowBg 12s ease-in-out infinite;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+.screen4{
+  padding: clamp(35px, 6vw, 55px) clamp(20px, 4vw, 35px) clamp(40px, 7vw, 60px);
+  justify-content: center;
+  gap: clamp(20px, 3.5vw, 38px);
+}
+
+.screen4 .details-title{
+  font-family:'Great Vibes', cursive;
+  font-size: clamp(44px, 9vw, 74px);
+  font-weight:400;
+  line-height:1.1;
+  color:#111;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.screen4.visible .details-title{opacity:1;transform:translateY(0);transition-delay:0.1s}
+
+.screen4 .details-text{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3.8vw, 30px);
+  font-weight:500;
+  line-height:1.7;
+  color:#111;
+  max-width: 680px;
+  padding: 0 10px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.screen4.visible .details-text{opacity:1;transform:translateY(0);transition-delay:0.3s}
+.screen4 .details-text:last-child{transition-delay:0.5s}
+
+.screen4 .divider{
+  width: 140px;
+  height: 1px;
+  background: rgba(0,0,0,0.12);
+  margin: clamp(10px, 2vw, 20px) 0;
+}
+
+.screen4 .form-title{
+  font-family:'Great Vibes', cursive;
+  font-size: clamp(44px, 9vw, 74px);
+  font-weight:400;
+  line-height:1.1;
+  color:#111;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.screen4.visible .form-title{opacity:1;transform:translateY(0);transition-delay:0.6s}
+
+.screen4 .form-subtitle{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3.8vw, 30px);
+  font-weight:500;
+  line-height:1.5;
+  color:#111;
+  max-width: 680px;
+  padding: 0 10px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.screen4.visible .form-subtitle{opacity:1;transform:translateY(0);transition-delay:0.7s}
+
+.screen4 .form-container{
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.8vw, 24px);
+  text-align: left;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.screen4.visible .form-container{opacity:1;transform:translateY(0);transition-delay:0.8s}
+
+.screen4 .form-field{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.screen4 .form-label{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3.2vw, 26px);
+  font-weight:600;
+  color:#111;
+}
+
+.screen4 .form-input{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.8vw, 22px);
+  padding: clamp(12px, 2vw, 16px) clamp(16px, 2.5vw, 20px);
+  border: 1.5px solid #47a5c8;
+  border-radius: 14px;
+  background: transparent;
+  color:#111;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.screen4 .form-input:focus{
+  border-color: #2b8aaa;
+}
+
+/* Radio */
+.screen4 .radio-group{
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.8vw, 14px);
+}
+.screen4 .radio-option{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.screen4 .radio-option input[type="radio"]{
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #47a5c8;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+  background: transparent;
+}
+.screen4 .radio-option input[type="radio"]:checked::after{
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #47a5c8;
+}
+.screen4 .radio-option span{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.8vw, 22px);
+  color:#111;
+}
+
+/* Checkbox */
+.screen4 .checkbox-group{
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.8vw, 14px);
+}
+.screen4 .checkbox-option{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.screen4 .checkbox-option input[type="checkbox"]{
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #47a5c8;
+  border-radius: 5px;
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+  background: transparent;
+}
+.screen4 .checkbox-option input[type="checkbox"]:checked::after{
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 6px;
+  height: 12px;
+  border: solid #47a5c8;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+/* Шрифт как у radio — одинаковый */
+.screen4 .checkbox-option span{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.8vw, 22px);
+  color:#111;
+}
+
+.screen4 .alcohol-text{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(17px, 2.6vw, 20px);
+  color: #555;
+  line-height: 1.5;
+  padding: 0 5px;
+  margin-bottom: 4px;
+}
+
+/* Кнопка Отправить */
+.screen4 .submit-btn{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  font-weight:700;
+  color: #47a5c8;
+  background: transparent;
+  border: 1.5px solid #df5aa5;
+  border-radius: 50px;
+  padding: clamp(14px, 2.5vw, 18px) clamp(35px, 6vw, 50px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: center;
+  margin-top: 12px;
+}
+.screen4 .submit-btn:hover{
+  background: rgba(223,90,165,0.06);
+  transform: scale(1.03);
+}
+.screen4 .submit-btn:active{
+  transform: scale(0.97);
+}
+
+/* ===== КОНТАКТЫ ===== */
+.screen4 .contacts-title{
+  font-family:'Great Vibes', cursive;
+  font-size: clamp(44px, 9vw, 74px);
+  font-weight:400;
+  line-height:1.1;
+  color:#111;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.screen4.visible .contacts-title{opacity:1;transform:translateY(0);transition-delay:0.9s}
+
+.screen4 .contacts-info{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3.8vw, 30px);
+  font-weight:500;
+  line-height:1.6;
+  color:#111;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.screen4.visible .contacts-info{opacity:1;transform:translateY(0);transition-delay:1s}
+
+.screen4 .contacts-phone{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight:600;
+  color:#111;
+  letter-spacing: 0.5px;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== ЭКРАН 1 ===== -->
+<div class="screen1">
+  <video autoplay loop muted playsinline>
+    <source src="видео.mp4" type="video/mp4"/>
+  </video>
+  <div class="overlay"></div>
+
+  <div class="star" style="left:3%;top:4%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:92%;top:6%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:82%;top:20%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:5%;top:38%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:90%;top:36%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:18%;top:8%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:78%;top:10%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:2%;top:60%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:94%;top:56%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:10%;top:75%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:88%;top:72%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:6%;top:88%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:86%;top:90%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:30%;top:90%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+  <div class="star" style="left:70%;top:88%"><svg viewbox="0 0 24 24"><path d="M12 2l2.3 7.2L22 12l-7.7 2.8L12 22l-2.3-7.2L2 12l7.7-2.8z" fill="none" stroke="white" stroke-width="1"></path></svg></div>
+
+  <h1 class="title">Girl or Boy</h1>
+  <a href="#screen2" class="arrow">
+    <svg viewbox="0 0 24 24" fill="none"><path d="M6 10l6 6 6-6" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</div>
+
+<!-- ===== ЭКРАН 2 ===== -->
+<div class="screen2" id="screen2">
+
+  <div class="title">Дорогие и любимые!</div>
+
+  <div class="info">
+    Приглашаем Вас на наше трепетное и<br>
+    семейное торжество! Произойдет<br>
+    очень важное и волнительное событие!
+  </div>
+
+  <div class="calendar-wrapper">
+    <div class="month-title">АВГУСТ</div>
+    <div class="calendar">
+      <div class="days">
+        <div class="cell"><div class="week">ПЯТНИЦА</div><div class="number">28</div></div>
+        <div class="cell middle"><div class="week">СУББОТА</div><div class="number">29</div></div>
+        <div class="cell"><div class="week">ВОСКРЕСЕНЬЕ</div><div class="number">30</div></div>
+      </div>
+      <div class="circle-wrapper">
+        <svg viewBox="0 0 200 200">
+          <defs>
+            <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <path class="rough-ellipse" d="M100 6 A94 94 0 0 0 100 194" fill="none" stroke="#df5aa5" stroke-width="3"/>
+          <path class="rough-ellipse" d="M100 6 A94 94 0 0 1 100 194" fill="none" stroke="#00a9d8" stroke-width="3"/>
+          <path class="rough-ellipse" d="M100 22 A78 78 0 0 0 100 178" fill="none" stroke="#df5aa5" stroke-width="3"/>
+          <path class="rough-ellipse" d="M100 22 A78 78 0 0 1 100 178" fill="none" stroke="#00a9d8" stroke-width="3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    Мы узнаем пол нашего малыша<br>
+    и хотим разделить это счастье с Вами!
+  </div>
+
+  <div class="time-block">
+    <div class="decor-lines">
+      <svg class="line top" viewBox="0 0 400 120" preserveAspectRatio="none">
+        <path d="M8 95 C35 25, 105 85, 170 55 C215 35, 155 10, 190 35 C240 80, 300 5, 390 28"/>
+      </svg>
+      <svg class="line bottom" viewBox="0 0 400 120" preserveAspectRatio="none">
+        <path d="M8 95 C35 25, 105 85, 170 55 C215 35, 155 10, 190 35 C240 80, 300 5, 390 28"/>
+      </svg>
+      <div class="time-text">
+        <div class="time-label">Ждём Вас в</div>
+        <div class="time-value"><span class="blue">18</span>:<span class="pink">00</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="location-block">
+    <div class="location-title">Где?</div>
+    <div class="location-address">
+      <span class="location-name">Агроусадьба «Хутор у Михалыча»</span>
+      <span class="location-details">Брестская область, д. Заречье,<br>ул. Октябрьская, д. 52</span>
+    </div>
+    <div class="map-container">
+      <iframe src="https://yandex.by/map-widget/v1/org/agrousadba_u_mikhalycha/86193548886/?ll=25.040347%2C52.535838&mode=search&z=16" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== ЭКРАН 3: Голосование ===== -->
+<div class="screen3" id="screen3">
+
+  <div class="vote-container">
+    <div class="vote-title">Ваши предположения по полу малыша?</div>
+
+    <div class="vote-buttons">
+      <button class="vote-btn" onclick="vote('girl')">
+        <div class="vote-photo">
+          <img src="цветок.png" alt="Девочка" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=width:100%;height:100%;background:%23ffb3c6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:45px>🌸</div>'">
+        </div>
+        <span class="vote-label">Девочка</span>
+        <span class="vote-count" id="count-girl">0</span>
+      </button>
+
+      <button class="vote-btn" onclick="vote('boy')">
+        <div class="vote-photo">
+          <img src="мяч.png" alt="Мальчик" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=width:100%;height:100%;background:%235c9ce6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:45px>⚽</div>'">
+        </div>
+        <span class="vote-label">Мальчик</span>
+        <span class="vote-count" id="count-boy">0</span>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== ДЕТАЛИ + АНКЕТА + КОНТАКТЫ ===== -->
+<div class="shared-bg screen4" id="screen4">
+
+  <div class="details-title">Детали</div>
+
+  <div class="details-text">
+    Мы хотим, чтобы все гости чувствовали себя комфортно и не ограничивали себя ни в чём.<br>
+    Поэтому по завершению мероприятия мы будем вызывать всем такси домой.
+  </div>
+
+  <div class="details-text">
+    В программе — природа, баня, ароматные шашлыки, весёлые конкурсы, громкий смех и отличное настроение.<br>
+    Одевайтесь удобно и будьте готовы веселиться от души!
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="form-title">Анкета</div>
+
+  <div class="form-subtitle">
+    Пожалуйста, подтвердите присутствие до 15.08.<br>
+    Нам важно знать точное количество гостей.
+  </div>
+
+  <form class="form-container" action="https://formspree.io/f/ТВОЙ_ID" method="POST">
+    <div class="form-field">
+      <label class="form-label">Фамилия и Имя</label>
+      <input type="text" name="name" class="form-input" placeholder="Иванов Иван" required>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Будете ли Вы одни или с +1?</label>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="plus-one" value="alone" required>
+          <span>Буду один / одна</span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="plus-one" value="plus1">
+          <span>Буду с +1</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Предпочтения по алкоголю</label>
+      <div class="alcohol-text">
+        Так как это отдых на природе — будет пиво, вино, крепкий алкоголь (водка, коньяк, виски).<br>
+        Но у нас много и не пьющих ребят — выберите, что пьёте:
+      </div>
+      <div class="checkbox-group">
+        <label class="checkbox-option">
+          <input type="checkbox" name="alcohol" value="none">
+          <span>Не пью алкоголь</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="alcohol" value="beer">
+          <span>Пиво</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="alcohol" value="wine">
+          <span>Вино</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="alcohol" value="vodka">
+          <span>Водка</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="alcohol" value="cognac">
+          <span>Коньяк</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="alcohol" value="whiskey">
+          <span>Виски</span>
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="alcohol" value="all">
+          <span>Всё понемногу</span>
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Отправить</button>
+  </form>
+
+  <div class="divider"></div>
+
+  <div class="contacts-title">Контакты</div>
+
+  <div class="contacts-info">
+    По всем вопросам обращайтесь:<br>
+    <span style="font-weight:600;">Владислав</span><br>
+    <a href="tel:+375292207777" class="contacts-phone" style="text-decoration:none;color:#111;">+375 29 220 77 77</a>
+  </div>
+
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  databaseURL: "https://gender-e7fab-default-rtdb.firebaseio.com/"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const votesRef = db.ref('votes');
+const MY_VOTE_KEY = 'gender_reveal_my_vote';
+
+votesRef.on('value', (snapshot) => {
+  const data = snapshot.val() || { girl: 0, boy: 0 };
+  document.getElementById('count-girl').textContent = data.girl || 0;
+  document.getElementById('count-boy').textContent = data.boy || 0;
+});
+
+async function vote(type) {
+  const snapshot = await votesRef.once('value');
+  const current = snapshot.val() || { girl: 0, boy: 0 };
+  const myVote = localStorage.getItem(MY_VOTE_KEY);
+
+  if (myVote === 'girl') current.girl = Math.max(0, (current.girl || 0) - 1);
+  if (myVote === 'boy') current.boy = Math.max(0, (current.boy || 0) - 1);
+
+  if (type === 'girl') {
+    current.girl = (current.girl || 0) + 1;
+    localStorage.setItem(MY_VOTE_KEY, 'girl');
+  } else if (type === 'boy') {
+    current.boy = (current.boy || 0) + 1;
+    localStorage.setItem(MY_VOTE_KEY, 'boy');
+  }
+
+  await votesRef.set(current);
+}
+
+const s2 = document.getElementById('screen2');
+new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) s2.classList.add('visible'); });
+}, { threshold: 0.1 }).observe(s2);
+
+const s4 = document.getElementById('screen4');
+new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) s4.classList.add('visible'); });
+}, { threshold: 0.1 }).observe(s4);
+</script>
+
+</body>
+</html>
