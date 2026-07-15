@@ -78,14 +78,14 @@ body{font-family:Arial;overflow-x:hidden}
   min-height:100vh;
   min-height:100dvh;
   width:100%;
-  /* СВЕТЛЫЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
-  background: radial-gradient(ellipse at 20% 30%, #ffd6e8 0%, transparent 50%),
-              radial-gradient(ellipse at 80% 70%, #d4f0ff 0%, transparent 50%),
-              radial-gradient(ellipse at 60% 20%, #ffe0ec 0%, transparent 40%),
-              radial-gradient(ellipse at 30% 80%, #c8e8ff 0%, transparent 40%),
-              radial-gradient(ellipse at 70% 50%, #ffc8de 0%, transparent 35%),
-              radial-gradient(ellipse at 50% 50%, #e8f4f8 0%, transparent 60%);
-  background-color: #f5f0f0;
+  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
+  background: radial-gradient(ellipse at 20% 30%, #ff8eb8 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 70%, #6bc8ff 0%, transparent 50%),
+              radial-gradient(ellipse at 60% 20%, #ff7aae 0%, transparent 40%),
+              radial-gradient(ellipse at 30% 80%, #4fb8ff 0%, transparent 40%),
+              radial-gradient(ellipse at 70% 50%, #ff6699 0%, transparent 35%),
+              radial-gradient(ellipse at 50% 50%, #d4f0ff 0%, transparent 60%);
+  background-color: #ffe8f0;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -140,10 +140,9 @@ body{font-family:Arial;overflow-x:hidden}
 }
 .circle-text{
   font-family:"Cormorant Garamond","Times New Roman",serif;
-  font-size: 16px;
-  letter-spacing:0.8px;
+  font-size: 13px;
+  letter-spacing:0.5px;
   fill:#111;
-  font-weight:600;
 }
 .main-circle{
   fill:none;
@@ -152,7 +151,7 @@ body{font-family:Arial;overflow-x:hidden}
 }
 @media(max-width:500px){
   .music{width:150px;height:150px;}
-  .circle-text{font-size:13px;}
+  .circle-text{font-size:11px;}
 }
 
 .screen2 .info{
@@ -162,11 +161,13 @@ body{font-family:Arial;overflow-x:hidden}
   line-height:1.45;
   padding: 0 10px;
   color:#111;
+  margin-bottom: clamp(10px, 2vw, 20px);
 }
 .screen2 .calendar-wrapper{
   width:100%;
   max-width:750px;
   flex-shrink: 0;
+  margin-top: clamp(8px, 1.5vw, 15px);
 }
 .screen2 .month-title{
   display:flex;
@@ -259,6 +260,7 @@ body{font-family:Arial;overflow-x:hidden}
   line-height:1.5;
   padding: 0 10px;
   color:#111;
+  margin-top: clamp(8px, 1.5vw, 15px);
 }
 
 .screen2 .time-block{
@@ -366,13 +368,13 @@ body{font-family:Arial;overflow-x:hidden}
   min-height: 40vh;
   min-height: 40dvh;
   width:100%;
-  /* СВЕТЛЫЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
-  background: radial-gradient(ellipse at 30% 40%, #ffb3d1 0%, transparent 55%),
-              radial-gradient(ellipse at 70% 60%, #a3dfff 0%, transparent 50%),
-              radial-gradient(ellipse at 50% 20%, #ffc8de 0%, transparent 45%),
-              radial-gradient(ellipse at 40% 80%, #b3e5ff 0%, transparent 40%),
-              radial-gradient(ellipse at 80% 30%, #ff9ec4 0%, transparent 35%);
-  background-color: #ffe0ec;
+  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
+  background: radial-gradient(ellipse at 30% 40%, #ff7aad 0%, transparent 55%),
+              radial-gradient(ellipse at 70% 60%, #4fb8ff 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 20%, #ff6699 0%, transparent 45%),
+              radial-gradient(ellipse at 40% 80%, #3aa8ff 0%, transparent 40%),
+              radial-gradient(ellipse at 80% 30%, #ff5588 0%, transparent 35%);
+  background-color: #ffd6e8;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -454,13 +456,13 @@ body{font-family:Arial;overflow-x:hidden}
 /* ===== ДЕТАЛИ + АНКЕТА + КОНТАКТЫ + ТАЙМЕР ===== */
 .shared-bg{
   width:100%;
-  /* СВЕТЛЫЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
-  background: radial-gradient(ellipse at 25% 35%, #ffd6e8 0%, transparent 50%),
-              radial-gradient(ellipse at 75% 65%, #d4f0ff 0%, transparent 50%),
-              radial-gradient(ellipse at 60% 25%, #ffe0ec 0%, transparent 40%),
-              radial-gradient(ellipse at 35% 75%, #c8e8ff 0%, transparent 40%),
-              radial-gradient(ellipse at 50% 50%, #e8f4f8 0%, transparent 55%);
-  background-color: #f5f0f0;
+  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
+  background: radial-gradient(ellipse at 25% 35%, #ff8eb8 0%, transparent 50%),
+              radial-gradient(ellipse at 75% 65%, #6bc8ff 0%, transparent 50%),
+              radial-gradient(ellipse at 60% 25%, #ff7aae 0%, transparent 40%),
+              radial-gradient(ellipse at 35% 75%, #4fb8ff 0%, transparent 40%),
+              radial-gradient(ellipse at 50% 50%, #d4f0ff 0%, transparent 55%);
+  background-color: #ffe8f0;
   display:flex;
   flex-direction:column;
   align-items:center;
