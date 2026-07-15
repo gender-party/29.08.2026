@@ -78,7 +78,6 @@ body{font-family:Arial;overflow-x:hidden}
   min-height:100vh;
   min-height:100dvh;
   width:100%;
-  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
   background: radial-gradient(ellipse at 20% 30%, #ff8eb8 0%, transparent 50%),
               radial-gradient(ellipse at 80% 70%, #6bc8ff 0%, transparent 50%),
               radial-gradient(ellipse at 60% 20%, #ff7aae 0%, transparent 40%),
@@ -126,8 +125,8 @@ body{font-family:Arial;overflow-x:hidden}
   margin: clamp(6px, 1.5vw, 14px) 0;
 }
 .music{
-  width: clamp(140px, 22vw, 190px);
-  height: clamp(140px, 22vw, 190px);
+  width: clamp(160px, 24vw, 210px);
+  height: clamp(160px, 24vw, 210px);
   cursor: pointer;
   transition: transform 0.2s ease;
 }
@@ -140,9 +139,10 @@ body{font-family:Arial;overflow-x:hidden}
 }
 .circle-text{
   font-family:"Cormorant Garamond","Times New Roman",serif;
-  font-size:13px;
-  letter-spacing:0.5px;
+  font-size: 16px;
+  letter-spacing:0.8px;
   fill:#111;
+  font-weight:600;
 }
 .main-circle{
   fill:none;
@@ -150,8 +150,8 @@ body{font-family:Arial;overflow-x:hidden}
   stroke-width:1.3;
 }
 @media(max-width:500px){
-  .music{width:140px;height:140px;}
-  .circle-text{font-size:11px;}
+  .music{width:150px;height:150px;}
+  .circle-text{font-size:13px;}
 }
 
 .screen2 .info{
@@ -365,7 +365,6 @@ body{font-family:Arial;overflow-x:hidden}
   min-height: 40vh;
   min-height: 40dvh;
   width:100%;
-  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
   background: radial-gradient(ellipse at 30% 40%, #ff7aad 0%, transparent 55%),
               radial-gradient(ellipse at 70% 60%, #4fb8ff 0%, transparent 50%),
               radial-gradient(ellipse at 50% 20%, #ff6699 0%, transparent 45%),
@@ -453,7 +452,6 @@ body{font-family:Arial;overflow-x:hidden}
 /* ===== ДЕТАЛИ + АНКЕТА + КОНТАКТЫ + ТАЙМЕР ===== */
 .shared-bg{
   width:100%;
-  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
   background: radial-gradient(ellipse at 25% 35%, #ff8eb8 0%, transparent 50%),
               radial-gradient(ellipse at 75% 65%, #6bc8ff 0%, transparent 50%),
               radial-gradient(ellipse at 60% 25%, #ff7aae 0%, transparent 40%),
@@ -533,7 +531,7 @@ body{font-family:Arial;overflow-x:hidden}
   padding: clamp(12px, 2vw, 16px) clamp(16px, 2.5vw, 20px);
   border: 1.5px solid #47a5c8;
   border-radius: 14px;
-  background: rgba(255,255,255,0.4);
+  background: transparent;
   color:#111;
   outline: none;
   transition: border-color 0.3s ease;
@@ -545,7 +543,7 @@ body{font-family:Arial;overflow-x:hidden}
 .screen4 .radio-option input[type="radio"]{
   appearance:none;-webkit-appearance:none;
   width:24px;height:24px;border:2px solid #47a5c8;border-radius:50%;
-  flex-shrink:0;position:relative;cursor:pointer;background:rgba(255,255,255,0.3);
+  flex-shrink:0;position:relative;cursor:pointer;background:transparent;
 }
 .screen4 .radio-option input[type="radio"]:checked::after{
   content:'';position:absolute;top:4px;left:4px;width:12px;height:12px;
@@ -561,7 +559,7 @@ body{font-family:Arial;overflow-x:hidden}
 .screen4 .checkbox-option input[type="checkbox"]{
   appearance:none;-webkit-appearance:none;
   width:24px;height:24px;border:2px solid #47a5c8;border-radius:5px;
-  flex-shrink:0;position:relative;cursor:pointer;background:rgba(255,255,255,0.3);
+  flex-shrink:0;position:relative;cursor:pointer;background:transparent;
 }
 .screen4 .checkbox-option input[type="checkbox"]:checked::after{
   content:'';position:absolute;top:3px;left:7px;width:7px;height:13px;
@@ -575,11 +573,11 @@ body{font-family:Arial;overflow-x:hidden}
 .screen4 .submit-btn{
   font-family:'Cormorant Garamond', serif;
   font-size: clamp(24px, 4vw, 32px);font-weight:700;color:#47a5c8;
-  background:rgba(255,255,255,0.3);border:1.5px solid #df5aa5;border-radius:50px;
+  background:transparent;border:1.5px solid #df5aa5;border-radius:50px;
   padding: clamp(14px, 2.5vw, 18px) clamp(35px, 6vw, 50px);
   cursor:pointer;transition:all 0.3s ease;align-self:center;margin-top:12px;
 }
-.screen4 .submit-btn:hover{background:rgba(223,90,165,0.1);transform:scale(1.03)}
+.screen4 .submit-btn:hover{background:rgba(223,90,165,0.06);transform:scale(1.03)}
 .screen4 .submit-btn:active{transform:scale(0.97)}
 
 /* ===== КОНТАКТЫ ===== */
@@ -676,7 +674,7 @@ body{font-family:Arial;overflow-x:hidden}
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.2);
+  background: transparent;
   gap: 3px;
 }
 .timer-number{
@@ -695,9 +693,10 @@ body{font-family:Arial;overflow-x:hidden}
   line-height: 1;
 }
 
-/* ===== ДЛЯ КРЕСТИКА ===== */
+/* ===== ДЛЯ КРЕСТИКА — ТОНКАЯ ЛИНИЯ ===== */
 .cross-line{
   transition: opacity 0.25s ease;
+  stroke-width: 1.5 !important;
 }
 .cross-line.hidden{
   opacity: 0;
@@ -764,8 +763,8 @@ body{font-family:Arial;overflow-x:hidden}
           <path d="M112 87 C128 94 128 106 112 113" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
           <path d="M126 74 C154 90 154 110 126 126" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
         </g>
-        <!-- крест выключения (скрывается при нажатии) -->
-        <line id="crossLine" x1="76" y1="76" x2="124" y2="124" stroke="#111" stroke-width="4" stroke-linecap="round" class="cross-line"/>
+        <!-- крест выключения (тонкая линия) -->
+        <line id="crossLine" x1="76" y1="76" x2="124" y2="124" stroke="#111" stroke-width="1.5" stroke-linecap="round" class="cross-line"/>
       </svg>
     </div>
   </div>
