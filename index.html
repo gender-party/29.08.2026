@@ -78,13 +78,14 @@ body{font-family:Arial;overflow-x:hidden}
   min-height:100vh;
   min-height:100dvh;
   width:100%;
-  background: radial-gradient(ellipse at 20% 30%, #ff8eb8 0%, transparent 50%),
-              radial-gradient(ellipse at 80% 70%, #6bc8ff 0%, transparent 50%),
-              radial-gradient(ellipse at 60% 20%, #ff7aae 0%, transparent 40%),
-              radial-gradient(ellipse at 30% 80%, #4fb8ff 0%, transparent 40%),
-              radial-gradient(ellipse at 70% 50%, #ff6699 0%, transparent 35%),
-              radial-gradient(ellipse at 50% 50%, #d4f0ff 0%, transparent 60%);
-  background-color: #ffe8f0;
+  /* СВЕТЛЫЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
+  background: radial-gradient(ellipse at 20% 30%, #f5d6e8 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 70%, #d4e8f5 0%, transparent 50%),
+              radial-gradient(ellipse at 60% 20%, #f0dce6 0%, transparent 40%),
+              radial-gradient(ellipse at 30% 80%, #c8dff0 0%, transparent 40%),
+              radial-gradient(ellipse at 70% 50%, #f0d0de 0%, transparent 35%),
+              radial-gradient(ellipse at 50% 50%, #e8f0f5 0%, transparent 60%);
+  background-color: #f8f2f5;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -366,12 +367,13 @@ body{font-family:Arial;overflow-x:hidden}
   min-height: 40vh;
   min-height: 40dvh;
   width:100%;
-  background: radial-gradient(ellipse at 30% 40%, #ff7aad 0%, transparent 55%),
-              radial-gradient(ellipse at 70% 60%, #4fb8ff 0%, transparent 50%),
-              radial-gradient(ellipse at 50% 20%, #ff6699 0%, transparent 45%),
-              radial-gradient(ellipse at 40% 80%, #3aa8ff 0%, transparent 40%),
-              radial-gradient(ellipse at 80% 30%, #ff5588 0%, transparent 35%);
-  background-color: #ffd6e8;
+  /* СВЕТЛЫЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
+  background: radial-gradient(ellipse at 30% 40%, #f5d0e0 0%, transparent 55%),
+              radial-gradient(ellipse at 70% 60%, #c8e0f0 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 20%, #f0d0de 0%, transparent 45%),
+              radial-gradient(ellipse at 40% 80%, #b8d8ee 0%, transparent 40%),
+              radial-gradient(ellipse at 80% 30%, #f0c8d8 0%, transparent 35%);
+  background-color: #f8eaf0;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -453,12 +455,13 @@ body{font-family:Arial;overflow-x:hidden}
 /* ===== ДЕТАЛИ + АНКЕТА + КОНТАКТЫ + ТАЙМЕР ===== */
 .shared-bg{
   width:100%;
-  background: radial-gradient(ellipse at 25% 35%, #ff8eb8 0%, transparent 50%),
-              radial-gradient(ellipse at 75% 65%, #6bc8ff 0%, transparent 50%),
-              radial-gradient(ellipse at 60% 25%, #ff7aae 0%, transparent 40%),
-              radial-gradient(ellipse at 35% 75%, #4fb8ff 0%, transparent 40%),
-              radial-gradient(ellipse at 50% 50%, #d4f0ff 0%, transparent 55%);
-  background-color: #ffe8f0;
+  /* СВЕТЛЫЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
+  background: radial-gradient(ellipse at 25% 35%, #f5d6e8 0%, transparent 50%),
+              radial-gradient(ellipse at 75% 65%, #d4e8f5 0%, transparent 50%),
+              radial-gradient(ellipse at 60% 25%, #f0dce6 0%, transparent 40%),
+              radial-gradient(ellipse at 35% 75%, #c8dff0 0%, transparent 40%),
+              radial-gradient(ellipse at 50% 50%, #e8f0f5 0%, transparent 55%);
+  background-color: #f8f2f5;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -860,9 +863,9 @@ body{font-family:Arial;overflow-x:hidden}
 
   <div class="details-title animate-on-scroll">Детали</div>
 
+  <!-- ОБНОВЛЕННЫЙ ТЕКСТ ПРО ТАКСИ (БЕЗ СМАЙЛОВ И КОРОЧЕ) -->
   <div class="details-text animate-on-scroll">
-    Мы хотим, чтобы все гости чувствовали себя комфортно и не ограничивали себя ни в чём.<br>
-    Поэтому по завершению мероприятия мы будем вызывать всем такси домой.
+    Для вашего комфорта и безопасности мы позаботимся о том, чтобы каждый гость добрался домой с теплом в сердце. По завершении вечера мы с радостью вызовем такси для всех гостей.
   </div>
 
   <div class="details-text animate-on-scroll">
@@ -899,10 +902,7 @@ body{font-family:Arial;overflow-x:hidden}
     <div class="form-field">
       <label class="form-label">Предпочтения по алкоголю</label>
       <div class="checkbox-group">
-        <label class="checkbox-option">
-          <input type="checkbox" name="alcohol" value="none">
-          <span>Не пью алкоголь</span>
-        </label>
+       
         <label class="checkbox-option">
           <input type="checkbox" name="alcohol" value="beer">
           <span>Пиво</span>
@@ -922,6 +922,10 @@ body{font-family:Arial;overflow-x:hidden}
         <label class="checkbox-option">
           <input type="checkbox" name="alcohol" value="whiskey">
           <span>Виски</span>
+        </label>
+         <label class="checkbox-option">
+          <input type="checkbox" name="alcohol" value="none">
+          <span>Не пью алкоголь</span>
         </label>
       </div>
     </div>
