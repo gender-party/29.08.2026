@@ -116,6 +116,43 @@ body{font-family:Arial;overflow-x:hidden}
   letter-spacing: 3px;
   padding-top: clamp(20px, 4vw, 40px);
 }
+
+/* === МУЗЫКАЛЬНАЯ КНОПКА === */
+.music-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: clamp(6px, 1.5vw, 14px) 0;
+}
+.music{
+  width: clamp(140px, 22vw, 190px);
+  height: clamp(140px, 22vw, 190px);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.music:hover{transform: scale(1.04);}
+.music:active{transform: scale(0.94);}
+.text-circle{transform-origin:center;animation:rotate 25s linear infinite;}
+@keyframes rotate{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+.circle-text{
+  font-family:"Cormorant Garamond","Times New Roman",serif;
+  font-size:13px;
+  letter-spacing:0.5px;
+  fill:#111;
+}
+.main-circle{
+  fill:none;
+  stroke:#111;
+  stroke-width:1.3;
+}
+@media(max-width:500px){
+  .music{width:140px;height:140px;}
+  .circle-text{font-size:11px;}
+}
+
 .screen2 .info{
   font-family:'Cormorant Garamond';
   font-size: clamp(18px, 3.5vw, 28px);
@@ -381,7 +418,6 @@ body{font-family:Arial;overflow-x:hidden}
 .screen3 .vote-btn:hover{transform: scale(1.1);}
 .screen3 .vote-btn:active{transform: scale(0.92);}
 
-/* АДАПТИВНЫЕ КАРТИНКИ ДЛЯ ГОЛОСОВАНИЯ — теперь просто эмодзи */
 .screen3 .vote-emoji{
   font-size: clamp(64px, 14vw, 110px);
   line-height: 1;
@@ -655,6 +691,14 @@ body{font-family:Arial;overflow-x:hidden}
   letter-spacing: 0.3px;
   line-height: 1;
 }
+
+/* ===== ДЛЯ КРЕСТИКА ===== */
+.cross-line{
+  transition: opacity 0.25s ease;
+}
+.cross-line.hidden{
+  opacity: 0;
+}
 </style>
 </head>
 <body>
@@ -693,6 +737,36 @@ body{font-family:Arial;overflow-x:hidden}
 
   <div class="title animate-on-scroll">Дорогие и любимые!</div>
 
+  <!-- ===== МУЗЫКАЛЬНАЯ КНОПКА ===== -->
+  <div class="music-wrapper animate-on-scroll">
+    <audio id="music" src="music.mp3"></audio>
+    <div class="music" id="musicButton">
+      <svg viewBox="0 0 200 200">
+        <defs>
+          <path id="circlePath" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/>
+        </defs>
+        <!-- вращающийся текст -->
+        <g class="text-circle">
+          <text class="circle-text">
+            <textPath href="#circlePath" startOffset="0%">ВКЛЮЧИТЕ МУЗЫКУ • </textPath>
+            <textPath href="#circlePath" startOffset="33%">ВКЛЮЧИТЕ МУЗЫКУ • </textPath>
+            <textPath href="#circlePath" startOffset="66%">ВКЛЮЧИТЕ МУЗЫКУ • </textPath>
+          </text>
+        </g>
+        <!-- круг -->
+        <circle cx="100" cy="100" r="58" class="main-circle"/>
+        <!-- динамик -->
+        <g transform="translate(100 100) scale(0.42) translate(-100 -100)">
+          <path d="M60 88 L78 88 L98 72 L98 128 L78 112 L60 112 Z" fill="#111"/>
+          <path d="M112 87 C128 94 128 106 112 113" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+          <path d="M126 74 C154 90 154 110 126 126" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+        </g>
+        <!-- крест выключения (скрывается при нажатии) -->
+        <line id="crossLine" x1="76" y1="76" x2="124" y2="124" stroke="#111" stroke-width="4" stroke-linecap="round" class="cross-line"/>
+      </svg>
+    </div>
+  </div>
+
   <div class="info animate-on-scroll">
     Приглашаем Вас на наше трепетное и<br>
     семейное торжество! Произойдет<br>
@@ -716,8 +790,6 @@ body{font-family:Arial;overflow-x:hidden}
           <div class="number">30</div>
         </div>
       </div>
-
-      <!-- ТОЛЬКО ФОТО КРУГ, БЕЗ ТЕКСТА -->
       <div class="photo-wrapper">
         <img src="круг.png" alt="Круг" onerror="this.style.display='none'">
       </div>
@@ -979,6 +1051,24 @@ async function vote(type) {
 }
 
 updateVoteVisibility();
+
+// ===== МУЗЫКА =====
+const button = document.getElementById('musicButton');
+const audio = document.getElementById('music');
+const crossLine = document.getElementById('crossLine');
+let playing = false;
+
+button.addEventListener('click', () => {
+  if (!playing) {
+    audio.play();
+    playing = true;
+    crossLine.classList.add('hidden');
+  } else {
+    audio.pause();
+    playing = false;
+    crossLine.classList.remove('hidden');
+  }
+});
 
 // ===== ТАЙМЕР =====
 const targetDate = new Date('2026-08-28T18:00:00');
