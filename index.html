@@ -882,7 +882,8 @@ body{font-family:Arial;overflow-x:hidden}
     Пожалуйста, подтвердите присутствие до 15.08.
   </div>
 
-  <form class="form-container animate-on-scroll" id="guestForm" onsubmit="return submitForm(event)">
+  <!-- ДОБАВЛЕН АТРИБУТ accept-charset="UTF-8" -->
+  <form class="form-container animate-on-scroll" id="guestForm" accept-charset="UTF-8" onsubmit="return submitForm(event)">
     <div class="form-field">
       <label class="form-label">Фамилия и Имя</label>
       <input type="text" name="name" class="form-input" placeholder="Иванов Иван" required>
@@ -906,27 +907,27 @@ body{font-family:Arial;overflow-x:hidden}
       <label class="form-label">Предпочтения по алкоголю</label>
       <div class="checkbox-group">
         <label class="checkbox-option">
-          <input type="checkbox" name="alcohol" value="beer">
+          <input type="checkbox" name="alcohol" value="Пиво">
           <span>Пиво</span>
         </label>
         <label class="checkbox-option">
-          <input type="checkbox" name="alcohol" value="wine">
+          <input type="checkbox" name="alcohol" value="Вино">
           <span>Вино</span>
         </label>
         <label class="checkbox-option">
-          <input type="checkbox" name="alcohol" value="vodka">
+          <input type="checkbox" name="alcohol" value="Водка">
           <span>Водка</span>
         </label>
         <label class="checkbox-option">
-          <input type="checkbox" name="alcohol" value="cognac">
+          <input type="checkbox" name="alcohol" value="Коньяк">
           <span>Коньяк</span>
         </label>
         <label class="checkbox-option">
-          <input type="checkbox" name="alcohol" value="whiskey">
+          <input type="checkbox" name="alcohol" value="Виски">
           <span>Виски</span>
         </label>
         <label class="checkbox-option">
-          <input type="checkbox" name="alcohol" value="none">
+          <input type="checkbox" name="alcohol" value="Не пью алкоголь">
           <span>Не пью алкоголь</span>
         </label>
       </div>
@@ -935,7 +936,7 @@ body{font-family:Arial;overflow-x:hidden}
     <button type="submit" class="submit-btn">Отправить</button>
     
     <!-- Сообщение об успешной отправке -->
-    <div class="form-success-message" id="successMessage">Спасибо! Ваш ответ отправлен , ждём Вас на нашем празднике !</div>
+    <div class="form-success-message" id="successMessage">Спасибо! Ваш ответ отправлен, ждём Вас на нашем празднике!</div>
   </form>
 
   <div class="contacts-title animate-on-scroll">Контакты</div>
@@ -1136,9 +1137,9 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-// ===== ОТПРАВКА ФОРМЫ ЧЕРЕЗ AJAX =====
+// ===== ОТПРАВКА ФОРМЫ ЧЕРЕЗ AJAX (с правильной кодировкой UTF-8) =====
 async function submitForm(event) {
-  event.preventDefault(); // предотвращаем перезагрузку страницы
+  event.preventDefault();
   
   const form = document.getElementById('guestForm');
   const formData = new FormData(form);
@@ -1154,13 +1155,9 @@ async function submitForm(event) {
     });
     
     if (response.ok) {
-      // Очищаем форму
       form.reset();
-      
-      // Показываем сообщение об успехе
       successMessage.classList.add('show');
       
-      // Скрываем сообщение через 3 секунды
       setTimeout(() => {
         successMessage.classList.remove('show');
       }, 3000);
@@ -1171,7 +1168,7 @@ async function submitForm(event) {
     alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
   }
   
-  return false; // чтобы форма точно не перезагрузилась
+  return false;
 }
 </script>
 
