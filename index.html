@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
-<title>Gender Reveal</title>
+<title>Gender Party</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Ms+Madi&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -78,7 +79,6 @@ body{font-family:Arial;overflow-x:hidden}
   min-height:100vh;
   min-height:100dvh;
   width:100%;
-  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
   background: radial-gradient(ellipse at 20% 30%, #ffb3d1 0%, transparent 50%),
               radial-gradient(ellipse at 80% 70%, #a3dfff 0%, transparent 50%),
               radial-gradient(ellipse at 60% 20%, #ffc0d6 0%, transparent 40%),
@@ -96,7 +96,6 @@ body{font-family:Arial;overflow-x:hidden}
   overflow-x:hidden;
 }
 
-/* Простая анимация появления */
 .animate-on-scroll{
   opacity: 0;
   transform: translateY(30px);
@@ -118,7 +117,6 @@ body{font-family:Arial;overflow-x:hidden}
   padding-top: clamp(20px, 4vw, 40px);
 }
 
-/* === МУЗЫКАЛЬНАЯ КНОПКА === */
 .music-wrapper{
   display: flex;
   justify-content: center;
@@ -229,7 +227,6 @@ body{font-family:Arial;overflow-x:hidden}
   line-height:1;
 }
 
-/* ===== ФОТО КРУГ С ПУЛЬСАЦИЕЙ ===== */
 .screen2 .photo-wrapper{
   position:absolute;
   width: clamp(240px, 44vw, 380px);
@@ -367,7 +364,6 @@ body{font-family:Arial;overflow-x:hidden}
   min-height: 40vh;
   min-height: 40dvh;
   width:100%;
-  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
   background: radial-gradient(ellipse at 30% 40%, #ffb8d4 0%, transparent 55%),
               radial-gradient(ellipse at 70% 60%, #a8dfff 0%, transparent 50%),
               radial-gradient(ellipse at 50% 20%, #ffb8cc 0%, transparent 45%),
@@ -455,7 +451,6 @@ body{font-family:Arial;overflow-x:hidden}
 /* ===== ДЕТАЛИ + АНКЕТА + КОНТАКТЫ + ТАЙМЕР ===== */
 .shared-bg{
   width:100%;
-  /* ЯРКИЙ РОЗОВО-ГОЛУБОЙ ГРАДИЕНТ */
   background: radial-gradient(ellipse at 25% 35%, #ffb3d1 0%, transparent 50%),
               radial-gradient(ellipse at 75% 65%, #a3dfff 0%, transparent 50%),
               radial-gradient(ellipse at 60% 25%, #ffc0d6 0%, transparent 40%),
@@ -584,6 +579,20 @@ body{font-family:Arial;overflow-x:hidden}
 .screen4 .submit-btn:hover{background:rgba(223,90,165,0.06);transform:scale(1.03)}
 .screen4 .submit-btn:active{transform:scale(0.97)}
 
+/* ===== УВЕДОМЛЕНИЕ ОБ ОТПРАВКЕ ===== */
+.form-success-message{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  font-weight:600;
+  color:#47a5c8;
+  opacity:0;
+  transition: opacity 0.5s ease;
+  padding: 10px 20px;
+}
+.form-success-message.show{
+  opacity:1;
+}
+
 /* ===== КОНТАКТЫ ===== */
 .screen4 .contacts-title{
   font-family:'Great Vibes', cursive;
@@ -605,7 +614,6 @@ body{font-family:Arial;overflow-x:hidden}
   font-size: clamp(22px, 4vw, 34px);font-weight:600;color:#111;letter-spacing:0.5px;
 }
 
-/* ===== ЗВЁЗДОЧКИ ===== */
 .stars-triangle-bottom{
   position: relative;
   width: clamp(140px, 24vw, 210px);
@@ -634,7 +642,6 @@ body{font-family:Arial;overflow-x:hidden}
   right: 28%;
 }
 
-/* ===== ЖДЁМ ВАС ===== */
 .screen4 .waiting-title{
   font-family:'Great Vibes', cursive;
   font-size: clamp(48px, 10vw, 78px);
@@ -654,7 +661,6 @@ body{font-family:Arial;overflow-x:hidden}
   margin-top: clamp(2px, 0.5vw, 6px);
 }
 
-/* ===== ТАЙМЕР ===== */
 .timer-block{
   display: flex;
   gap: clamp(16px, 3vw, 32px);
@@ -697,7 +703,6 @@ body{font-family:Arial;overflow-x:hidden}
   line-height: 1;
 }
 
-/* ===== ДЛЯ КРЕСТИКА ===== */
 .cross-line{
   transition: opacity 0.25s ease;
   stroke-width: 1.5 !important;
@@ -743,7 +748,6 @@ body{font-family:Arial;overflow-x:hidden}
 
   <div class="title animate-on-scroll">Дорогие и любимые!</div>
 
-  <!-- ===== МУЗЫКАЛЬНАЯ КНОПКА ===== -->
   <div class="music-wrapper animate-on-scroll">
     <audio id="music" src="Песня.mp3"></audio>
     <div class="music" id="musicButton">
@@ -751,7 +755,6 @@ body{font-family:Arial;overflow-x:hidden}
         <defs>
           <path id="circlePath" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/>
         </defs>
-        <!-- вращающийся текст -->
         <g class="text-circle">
           <text class="circle-text">
             <textPath href="#circlePath" startOffset="0%">ВКЛЮЧИТЕ МУЗЫКУ • </textPath>
@@ -759,15 +762,12 @@ body{font-family:Arial;overflow-x:hidden}
             <textPath href="#circlePath" startOffset="66%">ВКЛЮЧИТЕ МУЗЫКУ • </textPath>
           </text>
         </g>
-        <!-- круг -->
         <circle cx="100" cy="100" r="58" class="main-circle"/>
-        <!-- динамик -->
         <g transform="translate(100 100) scale(0.42) translate(-100 -100)">
           <path d="M60 88 L78 88 L98 72 L98 128 L78 112 L60 112 Z" fill="#111"/>
           <path d="M112 87 C128 94 128 106 112 113" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
           <path d="M126 74 C154 90 154 110 126 126" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
         </g>
-        <!-- крест выключения (тонкая линия) -->
         <line id="crossLine" x1="76" y1="76" x2="124" y2="124" stroke="#111" stroke-width="1.5" stroke-linecap="round" class="cross-line"/>
       </svg>
     </div>
@@ -863,10 +863,8 @@ body{font-family:Arial;overflow-x:hidden}
 
   <div class="details-title animate-on-scroll">Детали</div>
 
-  <!-- НОВЫЙ АБЗАЦ ПРО ЦВЕТЫ (вставлен первым) -->
   <div class="details-text animate-on-scroll">
 Нам будет так приятно видеть в ваших руках цветок — розовый, если вы за девочку, или голубой, если за мальчика. Пусть каждый лепесток станет маленьким признанием в любви к нашему будущему чуду!
-
   </div>
 
   <div class="details-text animate-on-scroll">
@@ -884,7 +882,7 @@ body{font-family:Arial;overflow-x:hidden}
     Пожалуйста, подтвердите присутствие до 15.08.
   </div>
 
-  <form class="form-container animate-on-scroll" action="https://formspree.io/f/xjgnkdga" method="POST">
+  <form class="form-container animate-on-scroll" id="guestForm" onsubmit="return submitForm(event)">
     <div class="form-field">
       <label class="form-label">Фамилия и Имя</label>
       <input type="text" name="name" class="form-input" placeholder="Иванов Иван" required>
@@ -907,7 +905,6 @@ body{font-family:Arial;overflow-x:hidden}
     <div class="form-field">
       <label class="form-label">Предпочтения по алкоголю</label>
       <div class="checkbox-group">
-        
         <label class="checkbox-option">
           <input type="checkbox" name="alcohol" value="beer">
           <span>Пиво</span>
@@ -936,6 +933,9 @@ body{font-family:Arial;overflow-x:hidden}
     </div>
 
     <button type="submit" class="submit-btn">Отправить</button>
+    
+    <!-- Сообщение об успешной отправке -->
+    <div class="form-success-message" id="successMessage">✨ Спасибо! Ваш ответ отправлен ✨</div>
   </form>
 
   <div class="contacts-title animate-on-scroll">Контакты</div>
@@ -946,7 +946,6 @@ body{font-family:Arial;overflow-x:hidden}
     <a href="tel:+375292207777" class="contacts-phone" style="text-decoration:none;color:#111;">+375 29 220 77 77</a>
   </div>
 
-  <!-- 3 звездочки -->
   <div class="stars-triangle-bottom animate-on-scroll">
     <svg class="star-5-final top-center" viewBox="0 0 24 24">
       <defs>
@@ -974,11 +973,9 @@ body{font-family:Arial;overflow-x:hidden}
     </svg>
   </div>
 
-  <!-- Ждём Вас -->
   <div class="waiting-title animate-on-scroll">Ждём Вас</div>
   <div class="waiting-subtitle animate-on-scroll">через...</div>
 
-  <!-- Таймер -->
   <div class="timer-block animate-on-scroll">
     <div class="timer-item">
       <div class="timer-circle">
@@ -1013,6 +1010,7 @@ body{font-family:Arial;overflow-x:hidden}
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <script>
+// ===== FIREBASE =====
 const firebaseConfig = {
   databaseURL: "https://gender-e7fab-default-rtdb.firebaseio.com/"
 };
@@ -1064,16 +1062,15 @@ async function vote(type) {
 
 updateVoteVisibility();
 
-// ===== МУЗЫКА (С НАЧАЛОМ С 6-Й СЕКУНДЫ) =====
+// ===== МУЗЫКА =====
 const button = document.getElementById('musicButton');
 const audio = document.getElementById('music');
 const crossLine = document.getElementById('crossLine');
 let playing = false;
-const START_SECOND = 10; // Начинаем с 6-й секунды
+const START_SECOND = 10;
 
 button.addEventListener('click', () => {
   if (!playing) {
-    // Устанавливаем время начала на 6-ю секунду
     audio.currentTime = START_SECOND;
     audio.play();
     playing = true;
@@ -1128,7 +1125,7 @@ function updateTimer() {
 updateTimer();
 setInterval(updateTimer, 1000);
 
-// Анимация при скролле
+// ===== АНИМАЦИЯ ПРИ СКРОЛЛЕ =====
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1138,6 +1135,44 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// ===== ОТПРАВКА ФОРМЫ ЧЕРЕЗ AJAX =====
+async function submitForm(event) {
+  event.preventDefault(); // предотвращаем перезагрузку страницы
+  
+  const form = document.getElementById('guestForm');
+  const formData = new FormData(form);
+  const successMessage = document.getElementById('successMessage');
+  
+  try {
+    const response = await fetch('https://formspree.io/f/xjgnkdga', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      // Очищаем форму
+      form.reset();
+      
+      // Показываем сообщение об успехе
+      successMessage.classList.add('show');
+      
+      // Скрываем сообщение через 3 секунды
+      setTimeout(() => {
+        successMessage.classList.remove('show');
+      }, 3000);
+    } else {
+      alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
+    }
+  } catch (error) {
+    alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
+  }
+  
+  return false; // чтобы форма точно не перезагрузилась
+}
 </script>
 
 </body>
