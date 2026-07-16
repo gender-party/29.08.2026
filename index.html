@@ -1,5 +1,4 @@
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -1059,14 +1058,17 @@ async function vote(type) {
 
 updateVoteVisibility();
 
-// ===== МУЗЫКА =====
+// ===== МУЗЫКА (С НАЧАЛОМ С 6-Й СЕКУНДЫ) =====
 const button = document.getElementById('musicButton');
 const audio = document.getElementById('music');
 const crossLine = document.getElementById('crossLine');
 let playing = false;
+const START_SECOND = 6; // Начинаем с 6-й секунды
 
 button.addEventListener('click', () => {
   if (!playing) {
+    // Устанавливаем время начала на 6-ю секунду
+    audio.currentTime = START_SECOND;
     audio.play();
     playing = true;
     crossLine.classList.add('hidden');
